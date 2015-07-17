@@ -56,6 +56,33 @@ class User{
       Desc: '.$this->desc.'<br>');
   }
 
+  public function saveToDB(mysqli $conn, $newDesc, $newPass, $newPass_2){
+    if($newPass_2  != $newPass ){
+      echo ("Passwords do not match");
+      return;
+    }
+    $options = [
+      'cost' => 11,
+      'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
+    ];
+    $hashedPas = password_hash($newPass, PASSWORD_BCRYPT, $options);
+
+    $sqlUserUpdate = "UPDATE users SET hashed_password='".$hashedPas."',
+                                    description = '".$newDesc."'
+                                    WHERE id=".$this->id;
+    $result = $conn->query($sqlUserUpdate);
+    if ($result == TRUE){
+      $this->desc = $newDesc;
+
+    }else{
+      echo("Error: ".$conn->error."<br>");
+    }
+
+
+
+  }
+
+
   public function getAllPost(mysqli $conn, $numberOfPosts){
     $sql = "SELECT * FROM Tweets WHERE user_id = '".$this->id."' LIMIT ".$numberOfPosts;
     $result = $conn->query($sql);

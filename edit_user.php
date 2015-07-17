@@ -6,8 +6,8 @@ $loggedUser->loadFromDB($conn, $_SESSION['user_id']);
 
 if($_SERVER['REQUEST_METHOD'] == "POST"){
   $loggedUser->saveToDB($conn, $_POST['desc'],
-                                $_POST['pass'],
-                                $_POST['pass_2']);
+                                $_POST['password'],
+                                $_POST['password_2']);
 
 }
 
@@ -18,7 +18,7 @@ echo('
     <div class="col-sm-6 col-md-4 col-md-offset-4">
       <!--      <h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1>-->
       <div class="account-wall">
-        <img class="profile-img" src="img/login.jpg"alt="">
+
         <form class="form-signin" action="" method="post">
           <h3><legend>Edit account: </legend></h3>
 
