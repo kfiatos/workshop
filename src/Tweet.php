@@ -38,7 +38,7 @@ class Tweet{
 
   public function showTweet(){
     echo(
-      'Text: '.$this->text.'<br>
+      'Treść Tweeta:<br>'.$this->text.'<br>
       ');
   }
 
@@ -52,8 +52,8 @@ class Tweet{
     $result = $conn->query($sqlInsertTweet);
     if ($result = TRUE){
       $this->id = $conn->insert_id;
-      $this->name = $name;
-      $this->desc = $desc;
+      $this->id_user = $newUserId;
+      $this->text = $newText;
     }else{
       echo('Error: '.$conn->error.'<br>');
     }
@@ -72,6 +72,11 @@ class Tweet{
       $tweetData = $result->fetch_assoc();
       $this->id = $tweetData['id'];
       $this->text = $tweetData['text'];
+
+
+
+
+
     }
   }
 

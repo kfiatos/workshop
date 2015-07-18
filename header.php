@@ -2,10 +2,11 @@
 header('Content-type: text/html; charset=utf-8');
 require_once('src/Tweet.php');
 require_once('src/User.php');
-
 require_once('connection.php');
 session_start();
 if(isset($_SESSION['user_id']) == false ){
+//if(isset($_SESSION['user_id']) == false ){
+
   header('Location: http://localhost/workshop/login.php');
   die();
 }

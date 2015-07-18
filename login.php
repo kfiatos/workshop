@@ -1,14 +1,18 @@
 <?php
+session_start();
 header('Content-type: text/html; charset=utf-8');
-require_once('src/User.php');
 require_once("connection.php");
+require_once('src/User.php');
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $newUser  = new User();
   $newUser->login($conn, $_POST['name'], $_POST['password']);
+
+
   if($newUser->getId() != -1 ){
     $_SESSION['user_id'] = $newUser->getId();
     header('Location: http://localhost/workshop/');
     die();
+
 
   }else{
     echo("Błąd podczas logowania<br>");

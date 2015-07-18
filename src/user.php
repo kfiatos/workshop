@@ -19,8 +19,8 @@ class User{
 
   public function __construct(){
     $this->id = -1; // not loaded from db - state unknown
-    $this->name = " ";
-    $this->desc = " ";
+    $this->name = "";
+    $this->desc = "";
   }
 
 
@@ -84,18 +84,19 @@ class User{
 
 
   public function getAllPost(mysqli $conn, $numberOfPosts){
-    $sql = "SELECT * FROM Tweets WHERE user_id = '".$this->id."' LIMIT ".$numberOfPosts;
+    $sql = "SELECT * FROM Tweets WHERE user_id = '".$this->id."'ORDER BY creation_date DESC LIMIT ".$numberOfPosts;
     $result = $conn->query($sql);
     $retArray = array();
 
-    if ($result->num_rows> 0){
-      $tweetData = $result->fetch_assoc();
+      if($result->num_rows >= 0){
+        while($tweetData = $result->fetch_assoc()) {
 
-      $tempTweet = new Tweet();
-      $tempTweet->loadFromDB($conn, $tweetData['id']);
+          $tempTweet = new Tweet();
+          $tempTweet->loadFromDB($conn, $tweetData['id']);
 
-      $retArray[] = $tempTweet;
-      //TODO: Stworzyc obiekty klasy tweet i dodac je do tablicy zwracanej z jej funkcji
+          $retArray[] = $tempTweet;
+
+        }
     }
 
     return $retArray;
@@ -115,8 +116,13 @@ class User{
 
       $this->id = $userData['id'];
       $this->name = $userData['nick'];
-      $this->description  = $userData['description'];
+      $this->desc  = $userData['description'];
+    }else {
+      echo "Error during logging";
+      echo "Error: " . $conn->error . "<br>";
     }
+
+
   }
 
 
@@ -137,7 +143,7 @@ class User{
                       VALUES ('".$name."','".$hashedPas."','".$desc."')";
 
     $result = $conn->query($sqlInsertUser);
-    if ($result = TRUE){
+    if ($result == TRUE){
       $this->id = $conn->insert_id;
       $this->name = $name;
       $this->desc = $desc;
@@ -161,7 +167,7 @@ class User{
       }
     }else{
       echo("Error during logging...");
-      echo("Error: ".$con->error."<br>");
+      echo("Error: ".$conn->error."<br>");
     }
   }
 
