@@ -89,8 +89,16 @@ class User{
     $retArray = array();
 
     if ($result->num_rows> 0){
+      $tweetData = $result->fetch_assoc();
+
+      $tempTweet = new Tweet();
+      $tempTweet->loadFromDB($conn, $tweetData['id']);
+
+      $retArray[] = $tempTweet;
       //TODO: Stworzyc obiekty klasy tweet i dodac je do tablicy zwracanej z jej funkcji
     }
+
+    return $retArray;
   }
 
 

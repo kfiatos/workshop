@@ -1,6 +1,8 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
+require_once('src/Tweet.php');
 require_once('src/User.php');
+
 require_once('connection.php');
 session_start();
 if(isset($_SESSION['user_id']) == false ){
@@ -11,6 +13,7 @@ echo("<a href='http://localhost/workshop/index.php'> Home </a>");
 echo("<a href='http://localhost/workshop/show_user.php'> Moje konto </a>");
 echo("<a href='http://localhost/workshop/list_all_users.php'> List all users </a>");
 echo("<a href='http://localhost/workshop/edit_user.php'> Edit user </a> ");
+echo("<a href='http://localhost/workshop/logoff.php'> Log off </a> ");
 echo("<br>");
 
 

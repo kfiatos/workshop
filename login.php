@@ -5,10 +5,9 @@ require_once("connection.php");
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
   $newUser  = new User();
   $newUser->login($conn, $_POST['name'], $_POST['password']);
-
   if($newUser->getId() != -1 ){
     $_SESSION['user_id'] = $newUser->getId();
-    header('Location: http://localhost/workshop');
+    header('Location: http://localhost/workshop/');
     die();
 
   }else{
