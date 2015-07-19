@@ -103,6 +103,24 @@ class User{
 
     return $retArray;
   }
+  public function getAllOtherPost(mysqli $conn, $numberOfPosts){
+    $sql = "SELECT * FROM Tweets WHERE user_id != '".$this->id."'ORDER BY creation_date DESC LIMIT ".$numberOfPosts;
+    $result = $conn->query($sql);
+    $retArray = array();
+
+    if($result->num_rows > 0){
+      while($tweetData = $result->fetch_assoc()) {
+
+        $tempTweet = new Tweet();
+        $tempTweet->loadFromDB($conn, $tweetData['id']);
+
+        $retArray[] = $tempTweet;
+
+      }
+    }
+
+    return $retArray;
+  }
 
 
 

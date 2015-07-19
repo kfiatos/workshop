@@ -1,5 +1,7 @@
 <?php
 include('header.php');
+include('src/User.php');
+include('src/Tweet.php');
 $loggedUser = new User();
 $loggedUser->loadFromDB($conn, $_SESSION['user_id']);
 echo("<br><h1>Witaj ".$loggedUser->getName()."</h1>");
@@ -25,7 +27,7 @@ echo('<div class="container">
 
 
 
-echo("<h2>Moje Tweety:</h2>");
+echo("<h2>Wszystkie Tweety:</h2>");
 echo ("<hr>");
 $retArray  = $loggedUser->getAllPost($conn, 40);
 
@@ -33,18 +35,27 @@ echo("<br>");
 
 foreach($retArray as $tweet){
   echo("<br>");
-
-
   echo($tweet->showTweet());
   $_SESSION['tweetId'] = $tweet->getId();
+  echo('<hr>');
   echo('<form action="edit_tweet.php?tweet_id="" method="get">
   <input type="hidden" name="updateTweet" value="'.$tweet->getId().'">
 <button type="submit" class="btn btn-lg btn-primary btn-block" >Edit</button>
-</form>');
+</form>'
+  );
+
+
 
 
 }
+$retArray  = $loggedUser->getAllOtherPost($conn, 40);
 
+echo("<br>");
+
+foreach($retArray as $tweet) {
+  echo("<br>");
+  echo($tweet->showTweet());
+}
 
 include('footer.php');
 ?>
