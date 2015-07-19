@@ -3,6 +3,13 @@
 
 class Tweet{
 
+
+//        CREATE TABLE Tweets (id INT NOT NULL AUTO_INCREMENT, user_id INT NOT NULL, text VARCHAR(140),
+//                            creation_date TIMESTAMP, PRIMARY KEY(id),
+//                            FOREIGN KEY(user_id) REFERENCES Users(id));
+
+
+
   private $id;
   private $id_user;
   private $text;
@@ -42,10 +49,27 @@ class Tweet{
       ');
   }
 
+  public function udpateTweetInDb(mysqli $conn,$id, $newText){
+
+    $newText = $conn->real_escape_string($newText); //security
+    $sqlUpdateTweet = "UPDATE Tweets SET  text = '".$newText."' WHERE id = $id";
+
+    $result = $conn->query($sqlUpdateTweet);
+    if($result = TRUE){
+      $this->text = $newText;
+      $this->id = $id;
+
+
+    }else{
+      echo('Error: '.$conn->error.'<br>');
+    }
+
+  }
+
   public function saveTweetsToDb(mysqli $conn, $newUserId, $newText){
 
 
-
+    $newText = $conn->real_escape_string($newText); //security
     $sqlInsertTweet = "INSERT INTO Tweets(user_id, text)
                       VALUES ('".$newUserId."','".$newText."')";
 
@@ -64,10 +88,8 @@ class Tweet{
 
 
   public function loadFromDB(mysqli $conn, $idToload){
-    //$sqlLoadUser = "SELECT * FROM Users WHERE id = '".$idToload."'";
     $sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
     $result = $conn->query($sqlLoadTweet);
-
     if($result->num_rows === 1){
       $tweetData = $result->fetch_assoc();
       $this->id = $tweetData['id'];
@@ -79,6 +101,7 @@ class Tweet{
 
     }
   }
+
 
 
 }

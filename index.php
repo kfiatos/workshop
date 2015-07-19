@@ -30,12 +30,18 @@ echo ("<hr>");
 $retArray  = $loggedUser->getAllPost($conn, 40);
 
 echo("<br>");
-//var_dump($retArray);
+
 foreach($retArray as $tweet){
   echo("<br>");
 
 
   echo($tweet->showTweet());
+  $_SESSION['tweetId'] = $tweet->getId();
+  echo('<form action="edit_tweet.php?tweet_id="" method="get">
+  <input type="hidden" name="updateTweet" value="'.$tweet->getId().'">
+<button type="submit" class="btn btn-lg btn-primary btn-block" >Edit</button>
+</form>');
+
 
 }
 

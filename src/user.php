@@ -67,15 +67,17 @@ class User{
     ];
     $hashedPas = password_hash($newPass, PASSWORD_BCRYPT, $options);
 
+    $newDesc = $conn->real_escape_string($newDesc); //security
     $sqlUserUpdate = "UPDATE users SET hashed_password='".$hashedPas."',
                                     description = '".$newDesc."'
                                     WHERE id=".$this->id;
     $result = $conn->query($sqlUserUpdate);
     if ($result == TRUE){
       $this->desc = $newDesc;
-
+      return;
     }else{
       echo("Error: ".$conn->error."<br>");
+
     }
 
 
@@ -88,7 +90,7 @@ class User{
     $result = $conn->query($sql);
     $retArray = array();
 
-      if($result->num_rows >= 0){
+      if($result->num_rows > 0){
         while($tweetData = $result->fetch_assoc()) {
 
           $tempTweet = new Tweet();
@@ -139,6 +141,8 @@ class User{
     ];
     $hashedPas = password_hash($password, PASSWORD_BCRYPT, $options);
 
+    $name = $conn->real_escape_string($name); //security
+    $desc = $conn->real_escape_string($desc); //security
     $sqlInsertUser = "INSERT INTO Users(nick, hashed_password, description)
                       VALUES ('".$name."','".$hashedPas."','".$desc."')";
 

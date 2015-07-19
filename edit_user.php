@@ -1,6 +1,8 @@
 <?php
 include('header.php');
-
+if(!isset($_SESSION)) {
+  session_start();
+}
 $loggedUser = new User();
 $loggedUser->loadFromDB($conn, $_SESSION['user_id']);
 
@@ -8,8 +10,10 @@ if($_SERVER['REQUEST_METHOD'] == "POST"){
   $loggedUser->saveToDB($conn, $_POST['desc'],
                                 $_POST['password'],
                                 $_POST['password_2']);
-
 }
+
+
+
 
 echo('
 
@@ -20,7 +24,7 @@ echo('
       <div class="account-wall">
 
         <form class="form-signin" action="" method="post">
-          <h3><legend>Edit account: </legend></h3>
+          <h3><legend>Edit account '.$loggedUser->getName().'   </legend></h3>
 
           <label for="">Description:</label></br>
           <input name="desc" type="text" class="form-control"> </br>
@@ -40,6 +44,6 @@ echo('
 
 
 
-')
+');
 
 ?>
