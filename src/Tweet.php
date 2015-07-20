@@ -97,10 +97,13 @@ class Tweet
 
   public function loadFromDB(mysqli $conn, $idToload)
   {
+    //$sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
     $sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
     $result = $conn->query($sqlLoadTweet);
+
     if ($result->num_rows === 1) {
       $tweetData = $result->fetch_assoc();
+      //var_dump($tweetData);
       $this->id = $tweetData['id'];
       $this->text = $tweetData['text'];
 
@@ -109,6 +112,19 @@ class Tweet
 
   public function loadTweetsFromDBforUser(mysqli $conn, $userId){
     $sqlLoadTweet = "SELECT * FROM Tweets WHERE  user_id = '".$userId."'";
+    $result = $conn->query($sqlLoadTweet);
+    if ($result->num_rows === 1) {
+      $tweetData = $result->fetch_assoc();
+      $this->id = $tweetData['id'];
+      $this->id_user =$tweetData['user_id'];
+      $this->text = $tweetData['text'];
+
+
+    }
+  }
+
+  public function loadOneTweetFromDBforUser(mysqli $conn, $id, $userId){
+    $sqlLoadTweet = "SELECT text FROM Tweets WHERE id ='".$id."' user_id = '".$userId."'";
     $result = $conn->query($sqlLoadTweet);
     if ($result->num_rows === 1) {
       $tweetData = $result->fetch_assoc();

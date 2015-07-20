@@ -12,9 +12,10 @@ if(isset($_GET['user_id']) == true ) {
   $loggedUser->showUser();
 
 }
+echo("<hr>");
+
 if(isset($_GET['user_id']) == false ){
   $retArray  = $loggedUser->getAllPost($conn, 40);
-  echo("<br>");
   foreach($retArray as $tweet) {
     echo("<br>");
     //echo($tweet->loadTweetsFromDBforUser($conn, $_SESSION['user_id']));
@@ -22,7 +23,6 @@ if(isset($_GET['user_id']) == false ){
   }
 }else {
   $retArray = $userToShow->getAllPost($conn, 40);
-  echo("<br>");
   foreach ($retArray as $tweet) {
     echo("<br>");
     //echo($tweet->loadTweetsFromDBforUser($conn, $_GET['user_id']));

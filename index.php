@@ -1,7 +1,7 @@
 <?php
 include('header.php');
-include('src/User.php');
-include('src/Tweet.php');
+
+
 $loggedUser = new User();
 $loggedUser->loadFromDB($conn, $_SESSION['user_id']);
 echo("<br><h1>Witaj ".$loggedUser->getName()."</h1>");
@@ -43,6 +43,11 @@ foreach($retArray as $tweet){
 <button type="submit" class="btn btn-lg btn-primary btn-block" >Edit</button>
 </form>'
   );
+  echo('<form action="show_tweet.php?tweet_id="" method="get">
+  <input type="hidden" name="displayTweet" value="'.$tweet->getId().'">
+<button type="submit" class="btn btn-lg btn-primary btn-block" >Show</button>
+</form>'
+  );
 
 
 
@@ -55,7 +60,13 @@ echo("<br>");
 foreach($retArray as $tweet) {
   echo("<br>");
   echo($tweet->showTweet());
+  echo('<form action="show_tweet.php?tweet_id="" method="get">
+  <input type="hidden" name="displayTweet" value="'.$tweet->getId().'">
+<button type="submit" class="btn btn-lg btn-primary btn-block" >Show</button>
+</form>'
+  );
 }
+
 
 include('footer.php');
 ?>

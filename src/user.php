@@ -90,15 +90,14 @@ class User{
     $result = $conn->query($sql);
     $retArray = array();
 
-      if($result->num_rows > 0){
-        while($tweetData = $result->fetch_assoc()) {
+    if($result->num_rows > 0){
+      while($tweetData = $result->fetch_assoc()) {
 
-          $tempTweet = new Tweet();
-          $tempTweet->loadFromDB($conn, $tweetData['id']);
+        $tempTweet = new Tweet();
+        $tempTweet->loadFromDB($conn, $tweetData['id']);
 
-          $retArray[] = $tempTweet;
-
-        }
+        $retArray[] = $tempTweet;
+      }
     }
 
     return $retArray;
@@ -118,7 +117,7 @@ class User{
 
       }
     }
-
+// get posts for all other users than one logged in
     return $retArray;
   }
 
@@ -128,6 +127,7 @@ class User{
 
   public function loadFromDB(mysqli $conn, $idToload){
     //$sqlLoadUser = "SELECT * FROM Users WHERE id = '".$idToload."'";
+
     $sqlLoadUser = "SELECT * FROM Users WHERE id = $idToload";
     $result = $conn->query($sqlLoadUser);
 
