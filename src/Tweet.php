@@ -8,7 +8,7 @@ class Tweet
 //        CREATE TABLE Tweets (id INT NOT NULL AUTO_INCREMENT, user_id INT NOT NULL, text VARCHAR(140),
 //                            creation_date TIMESTAMP, PRIMARY KEY(id),
 //                            FOREIGN KEY(user_id) REFERENCES Users(id));
-
+// TODO: Input data validation
 
   private $id;
   private $id_user;
@@ -68,7 +68,6 @@ class Tweet
       $this->text = $newText;
       $this->id = $id;
 
-
     } else {
       echo('Error: ' . $conn->error . '<br>');
     }
@@ -118,7 +117,7 @@ class Tweet
       $this->id = $tweetData['id'];
       $this->id_user =$tweetData['user_id'];
       $this->text = $tweetData['text'];
-
+      // pobierz Tweety dla danego User_id
 
     }
   }

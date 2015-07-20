@@ -41,12 +41,12 @@ foreach($retArray as $tweet){
   echo('<form action="edit_tweet.php?tweet_id="" method="get">
   <input type="hidden" name="updateTweet" value="'.$tweet->getId().'">
 <button type="submit" class="btn btn-lg btn-primary btn-block" >Edit</button>
-</form>'
+</form>' //edit tylko dla właściciela Tweeta
   );
   echo('<form action="show_tweet.php?tweet_id="" method="get">
   <input type="hidden" name="displayTweet" value="'.$tweet->getId().'">
 <button type="submit" class="btn btn-lg btn-primary btn-block" >Show</button>
-</form>'
+</form>' //show dla właściciela Tweeta
   );
 
 
@@ -63,7 +63,7 @@ foreach($retArray as $tweet) {
   echo('<form action="show_tweet.php?tweet_id="" method="get">
   <input type="hidden" name="displayTweet" value="'.$tweet->getId().'">
 <button type="submit" class="btn btn-lg btn-primary btn-block" >Show</button>
-</form>'
+</form>'//show dla Wszystkich oprócz właściciela
   );
 }
 

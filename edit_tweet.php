@@ -1,18 +1,20 @@
 <?php
-session_start();
-include('src/Tweet.php');
-include('connection.php');
+include('header.php');
 
 if($_SERVER['REQUEST_METHOD'] == 'GET'){
   //$newTweet = new Tweet();
   $_SESSION['tweetToUpdateId']  = $_GET['updateTweet'];
-
+  $newTweet  = new Tweet();
+  $newTweet->loadFromDB($conn, $_GET['updateTweet']);
+  echo("Stara treść tweeta: ".$newTweet->getText());
+  // niezbyt secure - przerobić na metodę POST
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
   $newTweet  = new Tweet();
+  echo ("Tweet zaktualizowany");
   $newTweet->udpateTweetInDb($conn, $_SESSION['tweetToUpdateId'], $_POST['tweetUpdatedText']);
-  header('Location: http://localhost/workshop/');
+  // zmiana treści Tweeta
 }
 
 
@@ -39,7 +41,7 @@ echo('<div class="container">
 </div>');
 
 
-
+echo('<a href="index.php">Powrót do strony głównej</a>');
 
 
 ?>
