@@ -68,7 +68,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
           </form>
       </div>
-<!--      <a href="#" class="text-center new-account">Create an account </a>-->
+      <a href="register.php" class="text-center new-account">Zarejestruj się </a>
     </div>
   </div>
 </div>
