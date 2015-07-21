@@ -175,7 +175,7 @@ class User{
 
   }
   //login
-  
+
   public function login(mysqli $conn, $name, $insertedPassword){
     $sqlGetUser = "SELECT * FROM Users WHERE nick = '".$name."'";
     $result = $conn->query($sqlGetUser);
