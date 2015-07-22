@@ -73,7 +73,7 @@ class Comments
     $sqlInsertComment = "INSERT INTO Comments (user_id, tweet_id, text)
                       VALUES ('" . $newUserId . "','".$newTweetId."','" . $newText . "')";
 
-    $result = $conn->query($sqlInsertTweet);
+    $result = $conn->query($sqlInsertComment);
     if ($result = TRUE) {
       $this->id = $conn->insert_id;
       $this->user_id = $newUserId;
@@ -89,7 +89,7 @@ class Comments
   {
     //$sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
     $sqlLoadComment = "SELECT * FROM Comments WHERE id = $idToload";
-    $result = $conn->query($sqlLoadTweet);
+    $result = $conn->query($sqlLoadComment);
 
     if ($result->num_rows === 1) {
       $commentData = $result->fetch_assoc();
@@ -99,7 +99,29 @@ class Comments
       $this->user_id = $commentData['user_id'];
       $this->text = $commentData['text'];
 
+    }else{
+      echo("Brak komentarzy do tego tweeta");
     }
+  }
+
+
+
+  public function getAllComments(mysqli $conn){
+    $sql = "SELECT * FROM Comments WHERE tweet_id = '".$this->tweet_id."'ORDER BY creation_date DESC";
+    $result = $conn->query($sql);
+    $retArray = array();
+
+    if($result->num_rows > 0){
+      while($commentData = $result->fetch_assoc()) {
+
+        $tempComment = new Comments();
+        $tempComment->loadFromDB($conn, $commentData['id']);
+
+        $retArray[] = $tempComment;
+      }
+    }
+
+    return $retArray;
   }
 
 

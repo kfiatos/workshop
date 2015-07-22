@@ -58,7 +58,7 @@ foreach($retArray as $tweet){
 
 
 
-}
+};
 $retArray  = $loggedUser->getAllOtherPost($conn, 40);
 
 echo("<br>");
