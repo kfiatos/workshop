@@ -106,23 +106,7 @@ class Comments
 
 
 
-  public function getAllComments(mysqli $conn){
-    $sql = "SELECT * FROM Comments WHERE tweet_id = '".$this->tweet_id."'ORDER BY creation_date DESC";
-    $result = $conn->query($sql);
-    $retArray = array();
 
-    if($result->num_rows > 0){
-      while($commentData = $result->fetch_assoc()) {
-
-        $tempComment = new Comments();
-        $tempComment->loadFromDB($conn, $commentData['id']);
-
-        $retArray[] = $tempComment;
-      }
-    }
-
-    return $retArray;
-  }
 
 
 

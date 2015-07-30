@@ -7,8 +7,9 @@ $sqlToLoadAllUsersId = "SELECT id FROM Users";
 $result = $conn->query($sqlToLoadAllUsersId);
 
 if($result->num_rows > 0) {
+  $tempUser = new User();
   while($row = $result->fetch_assoc()){
-    $tempUser = new User();
+
     $tempUser->loadFromDB($conn, $row['id']);
 
     echo($tempUser->generateLinkToMyPage());

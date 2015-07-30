@@ -77,3 +77,11 @@
 #a{
     text-decoration: none;
 }
+
+.alert-info{
+    color: #080808;
+}
+.main-page-link{
+    padding-bottom: 30px;
+    padding-top: 30px;
+}

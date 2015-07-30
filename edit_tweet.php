@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 
 
-echo('<div class="container">
+echo('
   <div class="row">
     <div class="col-sm-6 col-md-4 col-md-offset-4">
       <!--<h1 class="text-center login-title">Sign in to continue to Bootsnipp</h1>-->
@@ -38,7 +38,7 @@ echo('<div class="container">
       <!--      <a href="#" class="text-center new-account">Create an account </a>-->
     </div>
   </div>
-</div>');
+');
 
 
 echo('<a href="index.php">Powrót do strony głównej</a>');

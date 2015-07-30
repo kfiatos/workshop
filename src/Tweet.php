@@ -53,9 +53,29 @@ class Tweet
   public function showTweet()
   {
     echo(
-      'Treść Tweeta:<br>' . $this->text . '<br>
-      ');
+      'Treść Tweeta:<br>' . $this->text );
   }
+
+  public function getAllComments(mysqli $conn)
+  {
+    $sql = "SELECT * FROM Comments WHERE tweet_id = '".$this->id."'ORDER BY creation_date DESC";
+    $result = $conn->query($sql);
+    $retArray = array();
+
+    if($result->num_rows > 0){
+      while($commentData = $result->fetch_assoc()) {
+
+        $tempComment = new Comments();
+        $tempComment->loadFromDB($conn, $commentData['id']);
+
+        $retArray[] = $tempComment;
+      }
+    }
+
+    return $retArray;
+  }
+
+
 
   public function udpateTweetInDb(mysqli $conn, $id, $newText)
   {
@@ -96,7 +116,7 @@ class Tweet
 
   public function loadFromDB(mysqli $conn, $idToload)
   {
-    //$sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
+
     $sqlLoadTweet = "SELECT * FROM Tweets WHERE id = $idToload";
     $result = $conn->query($sqlLoadTweet);
 

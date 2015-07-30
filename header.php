@@ -1,13 +1,13 @@
 <?php
 header('Content-type: text/html; charset=utf-8');
-require_once('src/Tweet.php');
+
 require_once('src/User.php');
+require_once('src/Tweet.php');
+require_once('src/Message.php');
 require_once('src/Comments.php');
 require_once('connection.php');
 session_start();
 if(isset($_SESSION['user_id']) == false ){
-//if(isset($_SESSION['user_id']) == false ){
-
   header('Location: http://localhost/workshop/login.php');
   die();
 }
@@ -19,10 +19,10 @@ if(isset($_SESSION['user_id']) == false ){
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>Bootstrap 101 Template</title>
+  <title>Mini Tweeter</title>
 
   <!-- Bootstrap -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap.css" rel="stylesheet">
   <link href="css/styles.css" rel="stylesheet">
 
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -35,20 +35,25 @@ if(isset($_SESSION['user_id']) == false ){
 <body>
 
 
-
-
-
-
 <?php
-echo("<ul>
-
-
-<li><a href='http://localhost/workshop/index.php'> Home </a></li>
-<li><a href='http://localhost/workshop/show_user.php'> Moje konto </a></li>
-<li><a href='http://localhost/workshop/list_all_users.php'> List all users </a></li>
-<li><a href='http://localhost/workshop/edit_user.php'> Edit user </a></li>
-<li><a href='http://localhost/workshop/logoff.php'> Log off </a></li>
-</ul>
+echo("
+<nav class='navbar navbar-inverse'>
+  <div class='container-fluid'>
+    <div class = 'navbar-header'>
+      <div>
+        <ul class='nav navbar-nav navbar-right'>
+          <li><a href='http://localhost/workshop/index.php'> Strona główna </a></li>
+          <li><a href='http://localhost/workshop/show_messages.php'> Wiadomości </a></li>
+          <li><a href='http://localhost/workshop/show_user.php'> Moje konto </a></li>
+          <li><a href='http://localhost/workshop/list_all_users.php'> List all users </a></li>
+          <li><a href='http://localhost/workshop/edit_user.php'> Edit user </a></li>
+          <li><a href='http://localhost/workshop/logoff.php'> Log off </a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class='container'>
 <br>");
 
 

@@ -77,14 +77,31 @@ class User{
       return;
     }else{
       echo("Error: ".$conn->error."<br>");
-
     }
 
 
 
   }
 
+  public function loadAllMessages(mysqli $conn, $recipentId)
+  {
+    $sqlLoadMessages = "SELECT * FROM Messages WHERE  recipient_id = '".$recipentId."'";
+    $result = $conn->query($sqlLoadMessages);
+    $retArray = array();
 
+    if($result->num_rows > 0){
+      while($messageData = $result->fetch_assoc()) {
+
+        $tempMessage = new Message();
+        $tempMessage->loadFromDB($conn, $messageData['id']);
+
+        $retArray[] = $tempMessage;
+      }
+    }
+
+    return $retArray;
+
+    }
   public function getAllPost(mysqli $conn, $numberOfPosts){
     $sql = "SELECT * FROM Tweets WHERE user_id = '".$this->id."'ORDER BY creation_date DESC LIMIT ".$numberOfPosts;
     $result = $conn->query($sql);
@@ -102,6 +119,7 @@ class User{
 
     return $retArray;
   }
+
   public function getAllOtherPost(mysqli $conn, $numberOfPosts){
     $sql = "SELECT * FROM Tweets WHERE user_id != '".$this->id."'ORDER BY creation_date DESC LIMIT ".$numberOfPosts;
     $result = $conn->query($sql);

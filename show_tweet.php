@@ -20,28 +20,27 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST['comment'])){
   $tempComment->saveCommentsToDb($conn, $_SESSION['user_id'], $_GET['displayTweet'],$_POST['comment']);
 //  $tempComment = null;
 };
-if(!isset($tempComment)){
-   $tempComment = new Comments();
-  };
+//if(!isset($tempComment)){
+//   $tempComment = new Comments();
+//  };
 
 
 echo("<h4>Komentarze:</h4>");
-echo ("<hr>");
-$retArray  = $tempComment->getAllComments($conn);
-var_dump($retArray);
-
+//echo ("<hr>");
+$retArray  = $tempTweet->getAllComments($conn);
 echo("<br>");
 
-foreach($retArray as $comment) {
-  echo("<br>");
-  echo($comment->getText());
+foreach($retArray as $comment) { ?>
+  <br>
+  <div class = 'text-center'>
+  <?php echo($comment->getText()); ?>
+  </div>
+<?php }
 
-}
 
 
-
-echo('
-
+echo('<br>
+<div class="text-center">
     <form action="" method="post" role="form">
       <legend>Skomentuj Tweeta</legend>
 
@@ -52,12 +51,14 @@ echo('
 
 
 
-      <button type="submit" class="btn btn-primary">Submit</button>
+      <button type="submit" class="btn btn-primary">Wyślij</button>
     </form>
-    <hr>
-    <a href="index.php">Powrót</a><br>
 
-  </div>
+    <p><a href="index.php">Powrót do strony głównej</a></p>
+    </div>
+
+
+
 ');
 
 
