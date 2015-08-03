@@ -9,55 +9,59 @@ echo('<h2>Lista wiadomości</h2>');
 echo("<hr>");
 $count = 1;
 
+if(!empty($tempArray)){
+  foreach ($tempArray as $tempMessage) {
+    echo('<h4>Wiadomość ' . $count . '</h4><br>');
+    $count++;
+    echo('<div class = "alert alert-info">' . $tempMessage->getText() . '</div>');
+
+    $tempUser->loadFromDB($conn, $tempMessage->getSenderId());
+    echo('<div class = "text-right">');
+    echo('Nadawca: ');
+    echo($tempUser->generateLinkToMyPage());
+    echo('</div>');
+    echo('<a href="">Odpowiedz</a>');
+    echo("<br><hr>");
+  }
+}else{
+    echo('<h2>Nie masz żadnych wiadomości</h2>');
+  }
+if($_SERVER['REQUEST_METHOD'] == 'POST' && !empty($_POST)){
+  $message->saveToDb($conn, $_SESSION['user_id'], $_POST['recipient_id'], $_POST['subject'], $_POST['text']);
 
 
-foreach($tempArray as $tempMessage) {
-  echo('<h4>Wiadomość '.$count.'</h4><br>');
-  $count++;
-  echo('<div class = "alert alert-info">'.$tempMessage->getText().'</div>');
-
-  $tempUser->loadFromDB($conn, $tempMessage->getSenderId());
-  echo('<div class = "text-right">');
-  echo('Nadawca: ');
-  echo($tempUser->generateLinkToMyPage());
-  echo('</div>');
-  echo('<a href="">Odpowiedz</a>');
-  echo("<br><hr>");
 }
+
 ?>
     <br>
+<div class="form-inline">
+  <div class="form-group">
     <div class="text-left">
-      <form action="" method="post" role="form">
+      <form action="show_messages.php" method="post" role="form">
         <legend>Napisz wiadomość</legend>
         <div class = "h5">Adresat
-        <select name="recipient_id" id="">
+          <select name="recipient_id" id="">
 
-          <?php
-            $sql = "SELECT id FROM Users WHERE id != '".$_SESSION['user_id']."'";
-            $result = $conn->query($sql);
+            <?php
+              $tempUser->listAllUsersExeptLoggedIn($conn);
+            ?>
 
-            if($result->num_rows > 0) {
-              $tempUser = new User();
-              while ($row = $result->fetch_assoc()) {
-
-                $tempUser->loadFromDB($conn, $row['id']);
-//                echo('<input type="hidden" name = "id" value = "">');
-
-                echo('<option value ="'.$tempUser->getId().'">'.$tempUser->getName().'</option>');
-                echo("<br>");
-              }
-            } ?>
-
-         </select></div>
-        <div class="form-group">
-          <label for="message"></label>
-          <textarea name="message" id="" cols="50" rows="4"></textarea>
+           </select>
         </div>
+
+        <label for="subject">Temat:</label>
+        <input type="text" name="subject"><br>
+        <label for="message">Treść</label>
+        <textarea name="text" id="" cols="50" rows="4"></textarea>
+    </div>
         <button type="submit" class="btn btn-primary">Wyślij</button>
       </form>
 
-    <div class = "text-center main-page-link"><a  href="index.php">Powrót do strony głównej</a></div>
+      <div class = "text-center main-page-link">
+      <a  href="index.php">Powrót do strony głównej</a>
     </div>
+    </div>
+
 <?php
 var_dump($_POST);
 ?>

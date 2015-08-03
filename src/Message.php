@@ -33,6 +33,19 @@ class Message
 
 
   }
+
+  public function saveToDb(mysqli $conn,$senderId, $recipientId, $subject, $text)
+  {
+//    $sqlSaveMessage = "INSERT INTO Messages VALUES('".$_SESSION['user_id']."','".$_POST['recipient_id']."','".$_POST['subject']."','".$_POST['text']."', now())";
+    $sqlSaveMessage = "INSERT INTO Messages (sender_id, recipient_id, subject, text, sendtime)
+                        VALUES('".$senderId."','".$recipientId."','".$subject."','".$text."', now())";
+    $result = $conn->query($sqlSaveMessage);
+    if($result){
+       echo('<div class = "h3 alert alert-success">Wiadomość wysłana prawidłowo</div>');
+    }
+
+  }
+
   public function loadFromDB(mysqli $conn, $idToload)
   {
 

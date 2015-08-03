@@ -47,7 +47,7 @@ echo("
           <li><a href='http://localhost/workshop/show_user.php'> Moje konto </a></li>
           <li><a href='http://localhost/workshop/list_all_users.php'> List all users </a></li>
           <li><a href='http://localhost/workshop/edit_user.php'> Edit user </a></li>
-          <li><a href='http://localhost/workshop/logoff.php'> Log off </a></li>
+          <li><a href='http://localhost/workshop/logoff.php'> Log off ".$_SESSION['user_name']."</a></li>
         </ul>
       </div>
     </div>

@@ -4,6 +4,7 @@ include('header.php');
 
 $loggedUser = new User();
 $loggedUser->loadFromDB($conn, $_SESSION['user_id']);
+
 echo("<br><h1 class = 'text-center' >Witaj ".$loggedUser->getName()."</h1>");
 echo('
 
@@ -16,7 +17,7 @@ echo('
           <h3><legend>Wpisz nowy Tweet</legend></h3>
           <label for="">Treść Tweeta</label><br>
           <textarea name ="tweetText"rows="4" cols="70"></textarea></br>
-          <button type="submit" class="btn btn-lg btn-primary btn">Wyslij</button>
+          <button type="submit" class="btn-primary btn">Wyslij</button>
           <span class="clearfix"></span>
         </form>
       </div>

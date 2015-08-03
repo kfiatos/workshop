@@ -56,6 +56,24 @@ class User{
       Desc: '.$this->desc.'<br>');
   }
 
+
+
+  public function listAllUsersExeptLoggedIn(mysqli $conn) //used to list users in <select> on show_messages.php
+  {
+    $sql = "SELECT id FROM Users WHERE id != '".$_SESSION['user_id']."'";
+    $result = $conn->query($sql);
+
+    if($result->num_rows > 0) {
+      $tempUser = new User();
+      while ($row = $result->fetch_assoc()) {
+
+        $tempUser->loadFromDB($conn, $row['id']);
+        echo('<option value ="'.$tempUser->getId().'">'.$tempUser->getName().'</option>');
+        echo("<br>");
+      }
+    }
+  }
+
   public function saveToDB(mysqli $conn, $newDesc, $newPass, $newPass_2){
     if($newPass_2  != $newPass ){
       echo ("Passwords do not match");
@@ -204,11 +222,11 @@ class User{
         $this->name = $userData['nick'];
         $this->desc = $userData['description'];
       }else{
-        echo("Wrong name or password...<br>");
+        echo('<h3 class="text-center alert alert-warning">Niepoprawny login lub hasło<br>');
       }
     }else{
       echo("Error during logging...");
-      echo("Error: ".$conn->error."<br>");
+//      echo("Error: ".$conn->error."<br>");
     }
   }
 

@@ -10,12 +10,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   if($newUser->getId() != -1 ){
     $_SESSION['user_id'] = $newUser->getId();
+    $_SESSION['user_name'] = $newUser->getName();
     header('Location: http://localhost/workshop/');
     die();
 
 
   }else{
-    echo("Błąd podczas logowania<br>");
+    echo('<h3 class=" text-center alert alert-warning">Błąd podczas logowania</h3><br>');
   }
 
 
